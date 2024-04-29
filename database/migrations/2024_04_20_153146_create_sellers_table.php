@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('sellers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buyer-id')->constrained('buyers')->cascadeOnDelete();
-            $table->foreignId('brand-id')->constrained('brands')->cascadeOnDelete();
-            $table->string('commercialRecord')->nullable();
-            $table->boolean('is-owner')->default(false);
+            $table->foreignId('buyer_id')->constrained('buyers')->cascadeOnDelete();
+            $table->foreignId('brand_id')->constrained('brands')->cascadeOnDelete();
+            $table->string('commercialRecord');
+            $table->boolean('is_owner')->default(false);
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }

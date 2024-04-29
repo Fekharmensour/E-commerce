@@ -27,9 +27,9 @@ class RegisterRequest extends FormRequest
             'username' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:buyers',
             'password' => 'required|string|min:6|confirmed',
-            'phone' => 'required|string|max:255|nullable',
+            'phone' => 'string|max:255|nullable',
             'address' => 'string|max:255|nullable',
-            'role' => 'string|max:255|nullable',
+            'role' => 'boolean|max:255|nullable',
             'is-admin' => 'string|max:255|nullable',
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
         ];

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Buyer;
 
-use App\Http\Requests\Auth\RegisterRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;
-use App\Models\Buyer;
-use http\Env\Response;
+use App\Http\Resources\Cart\CartsResource;
+use App\Models\Cart;
+use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -50,4 +51,36 @@ class BuyerController extends Controller
         }
         return response()->json(['message' => 'Image upload failed'], 400);
     }
+
+    public function updateRole(Request $request)
+    {
+        $validateData = $request->validate([
+            'brand_id' => 'required|exists:brands,id',
+            'commercialRecord' => 'required|file|mimes:pdf|max:2048',
+        ]);
+        if ($request->hasFile('commercialRecord')) {
+            $path = $request->file('commercialRecord')->store('commercialRecord', 'public');
+            $validateData['commercialRecord'] = $path;
+        }
+
+        $buyer = Auth::user();
+        if ($buyer->sellers()->exists()) {
+            return response()->json(['message' => 'Buyer is already a seller'], 400);
+        }
+
+        $seller = Seller::create([
+            'buyer_id' => $buyer->id,
+            'is_owner'=>    true ,
+            'brand_id' => $request->brand_id,
+            'commercialRecord' => $validateData['commercialRecord'] ,
+        ]);
+
+        return response()->json(['message' => 'Seller created successfully', 'seller' => $seller], 201);
+    }
+
+
+
+
+
+
 }

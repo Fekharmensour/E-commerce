@@ -15,6 +15,7 @@ class Seller extends Model
         'commercialRecord',
         'brand_id',
         'is_owner',
+        'status'
     ];
 
     public function buyer():BelongsTo

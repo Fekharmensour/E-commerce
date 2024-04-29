@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Buyer;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\Buyer\AuthResource;
@@ -21,7 +22,9 @@ class BuyerAuthController extends Controller
         $validatedData = $request->validated();
         $buyer = Buyer::create(
             $request->except(['password','password_confirmation']) +
-            ['password' => Hash::make($validatedData['password'])]
+            ['password' => Hash::make($validatedData['password'])] +
+            ['role' => false] +
+            ['is_admin' => false ]
         );
         if (!$buyer) {
             return response()->json(['message' => 'Failed to create buyer'], 400);
