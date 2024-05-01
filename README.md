@@ -22,6 +22,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 # run server: php artisan serve
 
 ### documentation 
+# Example send data with a token: const response =  await axios.post('http://127.0.0.1:8000/api/product', Data, config);
 ## Register & Login 
 # register
 - URL = "http://127.0.0.1:8000/api/register"
@@ -37,7 +38,6 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 - status success = 200
 ## Profile 
 all of the routes you must authenticate in the platform with a token
-#example send data with a token: axios.post('http://127.0.0.1:8000/api/product', Data, config);
 # get data profile
 - URL = "http://127.0.0.1:8000/api/profile"
 - data send = none
@@ -198,7 +198,7 @@ this without authenticate
 - status success = 200
 
 # Store new Product: this with an authentication
-- URL = "http://127.0.0.1:8000/api/product/storeProduct
+- URL = "http://127.0.0.1:8000/api/product/storeProduct"
 - data send = {name, price, description ,category_id ,photos(array of photos , min four photo)}
 - method = post
 - config send = {
@@ -210,3 +210,65 @@ this without authenticate
 - status success = 201
 
 
+## Cart all of these you need to be authenticated
+# Add To Cart
+- URL = "http://127.0.0.1:8000/api/cart/addToCart"
+- data send = {product_id}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product added to cart successfully', cart }
+- status success = 201
+
+
+# update Cart (change quantity)
+- URL = "http://127.0.0.1:8000/api/cart/addToCart"
+- data send = {id(id_cart) , qte}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'cart(Qte) updated successfully', cart }
+- status success = 200
+
+# Delete cart 
+- URL = "http://127.0.0.1:8000/api/cart/deleteCart/{cart_id}"
+- data send = none
+- method = delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Cart deleted successfully' }
+- status success = 200
+
+
+# Clear all my carts
+- URL = "http://127.0.0.1:8000/api/cart/clearCarts"
+- data send = none
+- method = delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Carts deleted successfully' }
+- status success = 200
+ 
+# Get All my Cart 
+- URL = "http://127.0.0.1:8000/api/cart/getCarts"
+- data send = none
+- method = get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { carts }
+- status success = 200
