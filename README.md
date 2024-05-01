@@ -38,7 +38,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 ## Profile 
 all of the routes you must authenticate in the platform with a token
 #example send data with a token: axios.post('http://127.0.0.1:8000/api/product', Data, config);
-#get data profile
+# get data profile
 - URL = "http://127.0.0.1:8000/api/profile"
 - data send = none
 - method = get
@@ -73,7 +73,7 @@ all of the routes you must authenticate in the platform with a token
 - data response = { message: 'Profile updated successfully', buyer }
 - status success = 200
   
-#updateImage
+# updateImage
 - URL = "http://127.0.0.1:8000/api/profile/updateImage"
 - data send = {image(jpeg,png,jpg,gif,svg|max:2048)}
 - method = post
@@ -85,8 +85,8 @@ all of the routes you must authenticate in the platform with a token
 - data response = { message: 'image updated successfully', buyer }
 - status success = 200
 
-#chose be a Seller(updateRole) or use store new brand :
-method one: join to existing brand 
+# chose be a Seller(updateRole) or use store new brand :
+# method one: join to existing brand 
 - URL = "http://127.0.0.1:8000/api/profile/updateRole"
 - data send = { brand_id, commercialRecord(pdf)}
 - method = post
@@ -97,7 +97,7 @@ method one: join to existing brand
         };
 - data response = { message: 'Seller created successfully', seller }
 - status success = 201
-method two: with create a new brand
+# method two: with create a new brand
 - URL = "http://127.0.0.1:8000/api/brand/store"
 - data send = { name(name brand), commercialRecord(pdf) , logo(image|max:2048) , background_image(image|max:2048) }
 - method = post
@@ -109,7 +109,7 @@ method two: with create a new brand
 - data response = { message: 'Brand and Seller Account created successfully', seller }
 - status success = 201
 
-#update Password
+# update Password
 - URL = "http://127.0.0.1:8000/api/profile/resetPassword"
 - data send = {old_password, new_password , password_confirmation }
 - method = post
