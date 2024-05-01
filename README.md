@@ -11,56 +11,264 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### run server
+# config Data Base 
+- install Xamp or laragon
+- start running Apache and MySQL with port 3306
+- create a new DB with the name e-commerce
+- set password vide
+- use the user root
+# make migration: php artisan migrate
+# run server: php artisan serve
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### documentation 
+# Example send data with a token: const response =  await axios.post('http://127.0.0.1:8000/api/product', Data, config);
+## Register & Login 
+# register
+- URL = "http://127.0.0.1:8000/api/register"
+- data send = { username, email, password,password_confirmation}
+- data response = { token , buyer }
+- method = post
+- status success = 201
+# login
+- URL = "http://127.0.0.1:8000/api/login"
+- data send = { email, password }
+- data response = { token , buyer }
+- method = post
+- status success = 200
+## Profile 
+all of the routes you must authenticate in the platform with a token
+# get data profile
+- URL = "http://127.0.0.1:8000/api/profile"
+- data send = none
+- method = get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { buyer }
+- status success = 200
+# LogOut 
+- URL = "http://127.0.0.1:8000/api/profile/logout"
+- data send = none
+- method = get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message "Logged out successfully" }
+- status success = 200
+  
+# Update Profile 
+- URL = "http://127.0.0.1:8000/api/profile/update"
+- data send = {username, address, phone, image(jpeg,png,jpg,gif,svg|max:2048)}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Profile updated successfully', buyer }
+- status success = 200
+  
+# updateImage
+- URL = "http://127.0.0.1:8000/api/profile/updateImage"
+- data send = {image(jpeg,png,jpg,gif,svg|max:2048)}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'image updated successfully', buyer }
+- status success = 200
 
-## Learning Laravel
+# chose be a Seller(updateRole) or use store new brand :
+# method one: join to existing brand 
+- URL = "http://127.0.0.1:8000/api/profile/updateRole"
+- data send = { brand_id, commercialRecord(pdf)}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Seller created successfully', seller }
+- status success = 201
+# method two: with create a new brand
+- URL = "http://127.0.0.1:8000/api/brand/store"
+- data send = { name(name brand), commercialRecord(pdf) , logo(image|max:2048) , background_image(image|max:2048) }
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Brand and Seller Account created successfully', seller }
+- status success = 201
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# update Password
+- URL = "http://127.0.0.1:8000/api/profile/resetPassword"
+- data send = {old_password, new_password , password_confirmation }
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Password changed successfully' }
+- status success = 200
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+##  Brands 
+these without authenticate 
+# get All Brands
+- URL = "http://127.0.0.1:8000/brand/getBrands"
+- data send = none
+- method = get
+- data response = { brands }
+- status success = 200
+# view brand
+- URL = "http://127.0.0.1:8000/brand/showBrand/{brand_id}"
+- data send = none
+- method = get
+- data response = { brand }
+- status success = 200
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
 
-### Premium Partners
+## Seller
+this without authenticate 
+# view seller
+- URL = "http://127.0.0.1:8000/seller/showSeller/{seller_id}"
+- data send = none
+- method = get
+- data response = { seller }
+- status success = 200
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
 
-## Contributing
+## category
+# categories
+- URL = "http://127.0.0.1:8000/categories"
+- data send = none
+- method = get
+- data response = { categories }
+- status success = 200
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
+## Product 
+# Get All Products with Pagination
+- URL = "http://127.0.0.1:8000/products"
+- data send = none
+- method = get
+- data response = { products , paginate }
+- status success = 200
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+# Get Products with search
+- URL = "http://127.0.0.1:8000/products?search={search}"
+- data send = none
+- method = get
+- data response = { products , paginate }
+- status success = 200
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+# Get Products with a Select category 
+- URL = "http://127.0.0.1:8000/products?category_id={category_id}"
+- data send = none
+- method = get
+- data response = { products , paginate }
+- status success = 200
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Get Products with price comparison  
+- URL = "http://127.0.0.1:8000/products?min_price={min_price}&max_price={max_price}"
+- data send = none
+- method = get
+- data response = { products , paginate }
+- status success = 200
+
+# view Product 
+- URL = "http://127.0.0.1:8000//product/{product_id}"
+- data send = none
+- method = get
+- data response = { product }
+- status success = 200
+
+# Store new Product: this with an authentication
+- URL = "http://127.0.0.1:8000/api/product/storeProduct"
+- data send = {name, price, description ,category_id ,photos(array of photos , min four photo)}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product created successfully', product }
+- status success = 201
+
+
+## Cart all of these you need to be authenticated
+# Add To Cart
+- URL = "http://127.0.0.1:8000/api/cart/addToCart"
+- data send = {product_id}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product added to cart successfully', cart }
+- status success = 201
+
+
+# update Cart (change quantity)
+- URL = "http://127.0.0.1:8000/api/cart/addToCart"
+- data send = {id(id_cart) , qte}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'cart(Qte) updated successfully', cart }
+- status success = 200
+
+# Delete cart 
+- URL = "http://127.0.0.1:8000/api/cart/deleteCart/{cart_id}"
+- data send = none
+- method = delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Cart deleted successfully' }
+- status success = 200
+
+
+# Clear all my carts
+- URL = "http://127.0.0.1:8000/api/cart/clearCarts"
+- data send = none
+- method = delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Carts deleted successfully' }
+- status success = 200
+ 
+# Get All my Cart 
+- URL = "http://127.0.0.1:8000/api/cart/getCarts"
+- data send = none
+- method = get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { carts }
+- status success = 200
