@@ -19,13 +19,16 @@ class CartController extends Controller
         $request->validate([
             'product_id' => 'required|exists:products,id',
         ]);
-        Cart::create([
+        $cart = Cart::create([
             'product_id' => $request['product_id'],
             'buyer_id'=>$buyer->id ,
             'qte' => 1 ,
             'is_ordered'=>false
         ]);
-        return response()->json(['message' => 'Product added to cart successfully'], 201);
+        if (!$cart){
+            return response()->json(['message' => 'Cart not added'], 401);
+        }
+        return response()->json(['message' => 'Product added to cart successfully' , 'cart' => new CartsResource($cart)], 201);
 
     }
     public function updateCart(Request $request)
@@ -47,22 +50,16 @@ class CartController extends Controller
         }
 
         $cart->qte = $request->qte;
-        $cart->
         $cart->save();
-        return response()->json(['message' => 'cart(Qte) updated successfully'], 200);
+        return response()->json(['message' => 'cart(Qte) updated successfully' , 'cart' => new CartsResource($cart)], 200);
     }
-    public function deleteCart(Request $request)
+    public function deleteCart(Cart $cart_id)
     {
         $buyer = Auth::user();
         if (!$buyer) {
             return response()->json(['message' => 'Authentication required'], 401);
         }
-
-        $request->validate([
-            'id' => 'required|exists:carts,id',
-        ]);
-
-        $cart = Cart::find($request->id);
+        $cart = Cart::find($cart_id);
         if (!$cart) {
             return response()->json(['message' => 'Cart item not found.'], 404);
         }

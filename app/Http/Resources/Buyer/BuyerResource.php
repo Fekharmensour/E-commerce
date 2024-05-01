@@ -12,8 +12,10 @@ class BuyerResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray($request)
     {
+//        $seller = $this->seller();
+
         return [
             'id' => $this->id,
             'username' => $this->username,
@@ -23,6 +25,7 @@ class BuyerResource extends JsonResource
             'is_admin' => $this->is_admin,
             'phone' => $this->phone,
             'address' => $this->address,
+//            'status' => $seller ? $seller->status : null, // Check if seller exists
             'image' => $this->image,
         ];
     }

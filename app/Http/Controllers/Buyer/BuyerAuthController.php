@@ -52,15 +52,15 @@ class BuyerAuthController extends Controller
 
 
 
-    public function buyer(Request $request)
+    public function buyer()
     {
-        return response()->json(['buyer' => new BuyerResource($request->user())], 200);
+        $buyer = Auth::user();
+        return response()->json(['buyer' => new BuyerResource($buyer)], 200);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        $request->user()->currentAccessToken()->delete();
-
+        Auth::user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out successfully'], 200);
     }
 

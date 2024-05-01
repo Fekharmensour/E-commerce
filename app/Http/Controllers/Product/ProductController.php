@@ -10,13 +10,23 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Seller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
     public function store(StoreProdRequest $request)
     {
+        $buyer = Auth::user();
+        if (!$buyer){
+            return response()->json(["message"=> "authorization failed"], 401);
+        }else{
+            $seller = $buyer->seller() ;
+            if (!$seller){
+                return response()->json(["message"=> "authorization failed"], 401);
+            }
+        }
         $validateData = $request->validated();
-        $seller = Seller::find($validateData['seller_id']);
+        $seller = Seller::find($seller);
         if (!$seller || !$seller->status) {
             return response()->json(['message' => 'Your seller account is disabled'], 400);
         }
@@ -27,7 +37,7 @@ class ProductController extends Controller
                 $product->photos()->create(['photo' => $path]);
             }
         }
-        return response()->json(['message' => 'Product created successfully'], 201);
+        return response()->json(['message' => 'Product created successfully' , 'product' => new ProductsResource($product) ], 201);
 
     }
 

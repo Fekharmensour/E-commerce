@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Buyer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;
+use App\Http\Resources\Buyer\BuyerResource;
 use App\Http\Resources\Cart\CartsResource;
+use App\Models\Buyer;
 use App\Models\Cart;
 use App\Models\Seller;
 use Illuminate\Http\Request;
@@ -15,6 +17,37 @@ use Illuminate\Validation\Rules\File;
 class BuyerController extends Controller
 {
     //
+    public function index(Request $request)
+    {
+        $query = Buyer::query();
+
+        if ($request->has('role')) {
+            $query->where('role', $request->role);
+        }
+
+        if ($request->has('search')) {
+            $query->where('username', 'like', '%' . $request->search . '%');
+        }
+
+        // Call paginate directly on the query builder
+        $users = $query->paginate(2);
+
+        // Transform users using BuyerResource
+        $formattedUsers = BuyerResource::collection($users);
+
+        return response()->json([
+            'users' => $formattedUsers,
+            'paginate' => [
+                'total' => $users->total(),
+                'current_page' => $users->currentPage(),
+                'last_page' => $users->lastPage(),
+                'path' => $users->path(),
+                'prev_page_url' => $users->previousPageUrl(),
+                'next_page_url' => $users->nextPageUrl(),
+            ],
+        ]);
+    }
+
     public function updateProfile(UpdateRequest $request)
     {
         $buyer = Auth::user();
@@ -64,13 +97,15 @@ class BuyerController extends Controller
         }
 
         $buyer = Auth::user();
-        if ($buyer->sellers()->exists()) {
+        $buyer->role = true ;
+        $buyer->save();
+        if ($buyer->seller()->exists()) {
             return response()->json(['message' => 'Buyer is already a seller'], 400);
         }
 
         $seller = Seller::create([
             'buyer_id' => $buyer->id,
-            'is_owner'=>    true ,
+            'is_owner'=> false,
             'brand_id' => $request->brand_id,
             'commercialRecord' => $validateData['commercialRecord'] ,
         ]);

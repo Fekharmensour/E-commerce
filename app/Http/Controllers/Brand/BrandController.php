@@ -17,15 +17,15 @@ class BrandController extends Controller
     public function index()
     {
         $brands = Brand::withCount('sellers')->get();
-        return response()->json(['data' => BrandResource::collection($brands) ], 200);
+        $brands = $brands->where('status', 1)->sortByDesc('created_at');
+        return response()->json(['brands' => BrandResource::collection($brands) ], 200);
     }
     public function showBrand(Brand $brand)
     {
         $brand->load(['sellers' => function ($query) {
             $query->with('buyer');
         }]);
-
-        return new ShowBrandResource($brand);
+        return response()->json(['brand' => new BrandResource($brand) ], 200);
     }
     public function store(Request $request)
     {
@@ -66,9 +66,16 @@ class BrandController extends Controller
                 'commercialRecord' => $validateData['commercialRecord'] , // Store file path or null if no file
                 'is_owner' => true,
             ]);
+        }else{
+            return response()->json(['message' => 'Brand not added'], 400);
         }
-
-        return response()->json(['message' => 'Brand and Seller Account  created successfully'], 201);
+        if (!$seller){
+            $brand->delete();
+            return response()->json(['message' => 'Some think has been wrong'], 400);
+        }
+        $buyer->role = true ;
+        $buyer->save() ;
+        return response()->json(['message' => 'Brand and Seller Account  created successfully' , 'seller' => $seller], 201);
     }
 
     public function disabledBrands(){

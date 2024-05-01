@@ -32,7 +32,7 @@ class Buyer extends Authenticatable implements MustVerifyEmail
         'remember_token',
     ];
 
-    public function sellers():HasOne
+    public function seller():HasOne
     {
         return $this->hasOne(Seller::class);
     }

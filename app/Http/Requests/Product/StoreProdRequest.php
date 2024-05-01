@@ -24,9 +24,8 @@ class StoreProdRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
-            'rating_avg' => 'required|numeric|min:0|max:5',
+            'rating_avg' => 'nullable|numeric|min:0|max:5',
             'description' => 'nullable|string',
-            'seller_id' => 'required|exists:sellers,id',
             'category_id' => 'required|exists:categories,id',
             'photos' => 'required|array',
             'photos.*' => 'required|image|mimes:jpeg,png,jpg|max:10240',
