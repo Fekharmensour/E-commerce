@@ -27,7 +27,7 @@ class StoreProdRequest extends FormRequest
             'rating_avg' => 'nullable|numeric|min:0|max:5',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
-            'photos' => 'required|array',
+            'photos' => 'required|array|min:3|max:6',
             'photos.*' => 'required|image|mimes:jpeg,png,jpg|max:10240',
         ];
     }

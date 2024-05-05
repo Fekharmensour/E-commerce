@@ -17,29 +17,28 @@ class ProductController extends Controller
     public function store(StoreProdRequest $request)
     {
         $buyer = Auth::user();
-        if (!$buyer){
-            return response()->json(["message"=> "authorization failed"], 401);
-        }else{
-            $seller = $buyer->seller() ;
-            if (!$seller){
-                return response()->json(["message"=> "authorization failed"], 401);
-            }
+        if (!$buyer) {
+            return response()->json(["message" => "Authorization failed"], 401);
         }
-        $validateData = $request->validated();
-        $seller = Seller::find($seller);
-        if (!$seller || !$seller->status) {
+        $seller = $buyer->seller;
+        if (!$seller) {
+            return response()->json(["message" => "Seller not found"], 401);
+        }
+        $validatedData = $request->validated();
+
+        if (!$seller->status) {
             return response()->json(['message' => 'Your seller account is disabled'], 400);
         }
-        $product = Product::create($validateData);
+        $product = $seller->products()->create($validatedData);
         if ($request->hasFile('photos')) {
-            foreach ($request->photos as $photo) {
-                $path = $photo->store('product_photos/'.$product->category->name , 'public');
+            foreach ($request->file('photos') as $photo) {
+                $path = $photo->store('product_photos/' . $product->category->name, 'public');
                 $product->photos()->create(['photo' => $path]);
             }
         }
-        return response()->json(['message' => 'Product created successfully' , 'product' => new ProductsResource($product) ], 201);
-
+        return response()->json(['message' => 'Product created successfully', 'product' => new ProductsResource($product)], 201);
     }
+
 
     public  function showProduct(Product $product){
         return response()->json(['product' => new ShowProductResource($product)]);
