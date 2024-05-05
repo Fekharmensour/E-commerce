@@ -17,8 +17,7 @@ class SellerController extends Controller
   {
     return response()->json([ 'seller' => new SellersResource($seller)], 200);
   }
-  public function disabledSellers(){
-      $sellers = Seller::where('status' , false)->with(['brand', 'buyer'])->get();
-      return response()->json([ 'sellers' => SellersResource::collection($sellers)], 200);
-  }
+
+
+
 }

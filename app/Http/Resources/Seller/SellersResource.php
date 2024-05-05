@@ -18,13 +18,19 @@ class SellersResource extends JsonResource
         $buyer = $this->buyer ;
         return [
             'id' => $this->id,
+            'role'=>$buyer->role,
             'username' => $buyer->username ,
+            'phone'=> $buyer->phone ,
+            'address' => $buyer->address ,
+            'birthday' => $buyer->birthday ,
             'email' => $buyer->email ,
             'brand_name' => $brand->name ,
             'image' => $buyer->image ,
             'status' => $this->status ,
             'is_owner' =>$this->is_owner,
             'brand_logo' => $brand->logo,
+            'brand_background' => $brand->background_image,
+            'commercialRecord'=>$this->commercialRecord,
         ];
     }
 }

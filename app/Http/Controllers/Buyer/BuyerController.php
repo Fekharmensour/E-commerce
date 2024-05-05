@@ -21,6 +21,13 @@ class BuyerController extends Controller
     {
         $query = Buyer::query();
 
+        if ($request->has('status') ) {
+            $query->whereHas('seller', function ($query) {
+                $query->where('status', true);
+
+            });
+        }
+
         if ($request->has('role')) {
             $query->where('role', $request->role);
         }
@@ -30,7 +37,7 @@ class BuyerController extends Controller
         }
 
         // Call paginate directly on the query builder
-        $users = $query->paginate(2);
+        $users = $query->paginate(8);
 
         // Transform users using BuyerResource
         $formattedUsers = BuyerResource::collection($users);

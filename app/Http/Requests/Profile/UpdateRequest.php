@@ -27,6 +27,7 @@ class UpdateRequest extends FormRequest
             'username' => 'required|string|max:255',
             'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
+            'birthday' => 'nullable|date',
         ];
     }
     protected function failedValidation(Validator $validator)

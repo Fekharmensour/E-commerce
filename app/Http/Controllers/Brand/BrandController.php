@@ -34,10 +34,10 @@ class BrandController extends Controller
             'commercialRecord' => 'required|file|mimes:pdf|max:2048'
         ]);
         $buyer = Auth::user();
-        if ($buyer->sellers()->exists()) {
+        if ($buyer->seller()->exists()) {
             return response()->json(['message' => 'Buyer is already a seller'], 400);
         }$buyer = Auth::user();
-        if ($buyer->sellers()->exists()) {
+        if ($buyer->seller()->exists()) {
             return response()->json(['message' => 'Buyer is already a seller'], 400);
         }
         if ($request->hasFile('logo')) {
