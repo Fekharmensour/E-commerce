@@ -14,13 +14,13 @@ class Cart extends Model
     protected $fillable = [
         'product_id',
         'buyer_id',
-        'qte' ,
+        'qte',
         'is_ordered'
     ];
 
-    public function product():HasOne
+    public function product():BelongsTo
     {
-        return $this->hasOne(Product::class) ;
+        return $this->belongsTo(Product::class) ;
     }
     public function orders():HasMany
     {

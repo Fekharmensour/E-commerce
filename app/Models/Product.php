@@ -32,8 +32,8 @@ class Product extends Model
     {
         return $this->hasMany(Photo::class);
     }
-    public function cart():BelongsTo
+    public function cart():HasMany
     {
-        return $this->belongsTo(Cart::class) ;
+        return $this->hasMany(Cart::class) ;
     }
 }

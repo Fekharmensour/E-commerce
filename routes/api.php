@@ -5,6 +5,7 @@ use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Buyer\BuyerAuthController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Buyer\CartController;
+use App\Http\Controllers\Buyer\OrderController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Seller\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +70,10 @@ Route::delete('/admin/users/{buyer}' , [AdminController::class, 'deleteUser']);
 Route::put('/admin/rejectSeller/{seller}' , [AdminController::class, 'rejectSeller']);
 Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
 
+});
+
+
+////////////////// Order
+Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
+    Route::post('order', [OrderController::class, 'store']);
 });

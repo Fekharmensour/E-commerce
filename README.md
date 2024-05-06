@@ -272,3 +272,16 @@ this without authenticate
         };
 - data response = { carts }
 - status success = 200
+
+## Order must be authenticate
+# Set Order 
+- URL = "http://127.0.0.1:8000/api/order/order"
+- data send = {cart_id}
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message :  the order sent successfully , Order  }
+- status success = 201

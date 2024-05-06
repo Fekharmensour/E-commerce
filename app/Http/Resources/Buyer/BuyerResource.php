@@ -25,7 +25,6 @@ class BuyerResource extends JsonResource
             'is_admin' => $this->is_admin,
             'phone' => $this->phone,
             'address' => $this->address,
-//            'status' => $seller ? $seller->status : null, // Check if seller exists
             'image' => $this->image,
         ];
     }
