@@ -53,25 +53,18 @@ class CartController extends Controller
         $cart->save();
         return response()->json(['message' => 'cart(Qte) updated successfully' , 'cart' => new CartsResource($cart)], 200);
     }
-    public function deleteCart(Cart $cart_id)
+    public function deleteCart(Cart $cart)
     {
         $buyer = Auth::user();
         if (!$buyer) {
             return response()->json(['message' => 'Authentication required'], 401);
         }
-        $cart = Cart::find($cart_id);
-        if (!$cart) {
-            return response()->json(['message' => 'Cart item not found.'], 404);
-        }
-
         if ($cart->buyer_id !== $buyer->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
-
         $cart->delete();
         return response()->json(['message' => 'Cart deleted successfully'], 200);
     }
-
     public function clearCart()
     {
         $buyer = Auth::user();
