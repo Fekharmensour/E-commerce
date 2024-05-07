@@ -21,7 +21,8 @@ class CartsResource extends JsonResource
         return [
             'id' => $this->id,
             'qte' => $this->qte,
-             'product_id' => $product? $product->id :null,
+            'is_ordered'=>$this->is_ordered,
+            'product_id' => $product? $product->id :null,
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,
             'price' => $product ? $product->price : null,

@@ -23,7 +23,8 @@ Route::middleware(['auth:sanctum'])->prefix('profile/')->group(function () {
     Route::post('updateImage', [BuyerController::class, 'updateImage']);
     Route::post('updateRole', [BuyerController::class, 'updateRole']);
     Route::post('resetPassword', [BuyerAuthController::class, 'update_Password']);
-
+    Route::get('notification', [BuyerController::class, 'Notification']);
+    Route::delete('notification/{notification}', [BuyerController::class, 'DestroyNotification']);
 });
 
 
@@ -76,4 +77,16 @@ Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
 ////////////////// Order
 Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
     Route::post('order', [OrderController::class, 'store']);
+    Route::put('acceptOrder/{order}', [OrderController::class, 'acceptOrder']);
+    Route::put('rejectOrder/{order}' , [OrderController::class , 'rejectOrder']);
+    Route::get('order/{order}', [OrderController::class, 'showOrder']);
+    Route::get('sellerOrder/{order}', [OrderController::class, 'showSellerOrder']);
+    Route::get('hisOrders', [OrderController::class, 'index']);
+    Route::get('sellerOrders', [OrderController::class, 'sellerIndex']);
+    Route::get('sellerAcceptedOrders', [OrderController::class, 'sellerAcceptedOrders']);
+    Route::get('sellerRejectedOrders', [OrderController::class, 'sellerRejectedOrders']);
+    Route::get('acceptedHisOrders', [OrderController::class, 'acceptedHisOrders']);
+    Route::get('rejectedHisOrders', [OrderController::class, 'rejectedHisOrders']);
+    Route::get('waitingHisOrders', [OrderController::class, 'waitingHisOrders']);
+    Route::get('waitingOrders', [OrderController::class, 'waitingOrders']);
 });

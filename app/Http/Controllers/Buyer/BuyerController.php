@@ -8,6 +8,7 @@ use App\Http\Resources\Buyer\BuyerResource;
 use App\Http\Resources\Cart\CartsResource;
 use App\Models\Buyer;
 use App\Models\Cart;
+use App\Models\Notification;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -120,7 +121,29 @@ class BuyerController extends Controller
         return response()->json(['message' => 'Seller created successfully', 'seller' => $seller], 201);
     }
 
+    public function Notification()
+    {
+        $buyer = Auth::user();
+        if(!$buyer){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $Notification = Notification::where('receiver' , $buyer->id)->get();
+        return response()->json(['Notification' => $Notification], 200);
+    }
 
+    public function DestroyNotification(Notification $notification){
+        $buyer = Auth::user();
+        if(!$buyer){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        if ($notification->receiver !== $buyer->id){
+            return response()->json(['message' => "You can't delete this buyer"], 400);
+        }
+        $notification->delete();
+        return response()->json(['message' => 'Notification deleted successfully'], 200);
+
+
+    }
 
 
 

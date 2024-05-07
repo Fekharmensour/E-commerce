@@ -2,12 +2,10 @@
 
 namespace App\Http\Resources\Order;
 
-use App\Http\Resources\Buyer\BuyerResource;
-use App\Http\Resources\Seller\SellersResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrderResource extends JsonResource
+class OrderSellerResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -19,8 +17,7 @@ class OrderResource extends JsonResource
         $cart = $this->cart ;
         $product = $cart->product ;
         $image = $product ? $product->photos()->first() : null;
-        $seller = $product->seller ;
-        $buyer = $seller ? $seller->buyer : null;
+        $buyer = $cart->buyer;
         return [
             'id' => $this->id,
             'qte' => $cart->qte,
@@ -28,8 +25,8 @@ class OrderResource extends JsonResource
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,
             'price' => $product ? $product->price : null,
-            'seller' => [
-                'id' => $seller ? $seller->id : null,
+            'buyer' => [
+                'id' => $buyer ? $buyer->id : null,
                 'username'=> $buyer ? $buyer->username : null,
                 'email'=> $buyer ? $buyer->email : null,
                 'phone'=> $buyer ? $buyer->phone : null,

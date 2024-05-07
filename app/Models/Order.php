@@ -10,7 +10,8 @@ class Order extends Model
     use HasFactory;
     protected $fillable = [
         'cart_id',
-         'accepted'
+         'accepted',
+        'reject'
     ];
     public function cart()
     {
