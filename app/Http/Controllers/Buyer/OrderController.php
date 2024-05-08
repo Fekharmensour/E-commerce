@@ -117,7 +117,7 @@ class OrderController extends Controller
             'body' => 'Your order for ' . $product->name . ' has been rejected.',
             'type' => 'danger',
         ]);
-        return response()->json([ 'message' => 'the order accepted successfully' ,'order' => new OrderSellerResource($order)], 200);
+        return response()->json([ 'message' => 'the order rejected successfully' ,'order' => new OrderSellerResource($order)], 200);
     }
     public function showSellerOrder(Order $order)
     {

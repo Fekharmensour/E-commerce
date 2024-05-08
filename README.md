@@ -274,6 +274,7 @@ this without authenticate
 - status success = 200
 
 ## Order must be authenticate
+# these for buyer
 # Set Order 
 - URL = "http://127.0.0.1:8000/api/order/order"
 - data send = {cart_id}
@@ -285,3 +286,177 @@ this without authenticate
         };
 - data response = { message :  the order sent successfully , Order  }
 - status success = 201
+
+
+# Get All Orders
+- URL = "http://127.0.0.1:8000/api/order/hisOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Show Order
+- URL = "http://127.0.0.1:8000/api/order/hisOrders/{order}"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Order  }
+- status success = 200
+
+# Get All Order Accepted 
+- URL = "http://127.0.0.1:8000/api/order/acceptedHisOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Get All Orders Rejected 
+- URL = "http://127.0.0.1:8000/api/order/rejectedHisOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Get All Orders waiting to accept or reject by seller
+- URL = "http://127.0.0.1:8000/api/order/waitingHisOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+
+# All these for seller
+# Accept Order by Seller
+- URL = "http://127.0.0.1:8000/api/order/acceptOrder/{order_id}"
+- data send = none
+- method = Put
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message :  the order accepted successfully , Order  }
+- status success = 200
+
+# Reject Order by Seller
+- URL = "http://127.0.0.1:8000/api/order/rejectOrder/{order_id}"
+- data send = none
+- method = Put
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message :  the order rejected successfully , Order  }
+- status success = 200
+
+
+# Get All Orders
+- URL = "http://127.0.0.1:8000/api/order/sellerOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Show Order
+- URL = "http://127.0.0.1:8000/api/order/sellerOrder/{order_id}"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Order  }
+- status success = 200
+
+# Get All seller Accepted Orders
+- URL = "http://127.0.0.1:8000/api/order/sellerAcceptedOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Get All seller Rejected Orders
+- URL = "http://127.0.0.1:8000/api/order/sellerRejectedOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+# Get All Orders waiting to accept or reject by seller
+- URL = "http://127.0.0.1:8000/api/order/waitingOrders"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  Orders  }
+- status success = 200
+
+
+## Notificatoin , status of notification can be one of these ['success', 'warning', 'question', 'danger' , 'error' ]
+# Get All Notificaton 
+- URL = "http://127.0.0.1:8000/api/profile/notification"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  notification  }
+- status success = 200
+
+# Destroy Notification
+- URL = "http://127.0.0.1:8000/api/profile/notification/{notification_id}"
+- data send = none
+- method = Delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  'message' => 'Notification deleted successfully'  }
+- status success = 200

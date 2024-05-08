@@ -76,17 +76,21 @@ Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
 
 ////////////////// Order
 Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
+    // this for buyer
     Route::post('order', [OrderController::class, 'store']);
-    Route::put('acceptOrder/{order}', [OrderController::class, 'acceptOrder']);
-    Route::put('rejectOrder/{order}' , [OrderController::class , 'rejectOrder']);
-    Route::get('order/{order}', [OrderController::class, 'showOrder']);
-    Route::get('sellerOrder/{order}', [OrderController::class, 'showSellerOrder']);
     Route::get('hisOrders', [OrderController::class, 'index']);
-    Route::get('sellerOrders', [OrderController::class, 'sellerIndex']);
-    Route::get('sellerAcceptedOrders', [OrderController::class, 'sellerAcceptedOrders']);
-    Route::get('sellerRejectedOrders', [OrderController::class, 'sellerRejectedOrders']);
+    Route::get('hisOrders/{order}', [OrderController::class, 'showOrder']);
     Route::get('acceptedHisOrders', [OrderController::class, 'acceptedHisOrders']);
     Route::get('rejectedHisOrders', [OrderController::class, 'rejectedHisOrders']);
     Route::get('waitingHisOrders', [OrderController::class, 'waitingHisOrders']);
+    // this for seller
+    Route::put('acceptOrder/{order}', [OrderController::class, 'acceptOrder']);
+    Route::put('rejectOrder/{order}' , [OrderController::class , 'rejectOrder']);
+    Route::get('sellerOrders', [OrderController::class, 'sellerIndex']);
+    Route::get('sellerOrder/{order}', [OrderController::class, 'showSellerOrder']);
+    Route::get('sellerAcceptedOrders', [OrderController::class, 'sellerAcceptedOrders']);
+    Route::get('sellerRejectedOrders', [OrderController::class, 'sellerRejectedOrders']);
     Route::get('waitingOrders', [OrderController::class, 'waitingOrders']);
+
+
 });
