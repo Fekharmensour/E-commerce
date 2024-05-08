@@ -19,15 +19,13 @@ class ProductController extends Controller
 {
     public function store(StoreProdRequest $request)
     {
-        $buyer = Auth::user();
-        if (!$buyer) {
+        $seller = Auth::user()->seller;
+
+        if (!$seller) {
             return response()->json(["message" => "Authorization failed"], 401);
         }
-        $seller = $buyer->seller;
-        if (!$seller) {
-            return response()->json(["message" => "Seller not found"], 401);
-        }
         $validatedData = $request->validated();
+        $validatedData['seller_id'] = $seller->id;
         $product = Product::where('name', $validatedData['name'])->first();
         if ($product) {
             return response()->json(["message" => "Product already exists"], 401);
@@ -35,7 +33,7 @@ class ProductController extends Controller
         if (!$seller->status) {
             return response()->json(['message' => 'Your seller account is disabled'], 400);
         }
-        $product = $seller->products()->create($validatedData);
+        $product = Product::create($validatedData);
         if ($request->hasFile('photos')) {
             foreach ($request->file('photos') as $photo) {
                 $path = $photo->store('product_photos/' . $product->category->name, 'public');

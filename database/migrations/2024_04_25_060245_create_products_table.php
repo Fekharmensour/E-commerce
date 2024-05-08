@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->double('price');
-            $table->double('rating_avg')->default(3.5); ;
+            $table->double('rating_avg')->default(3.5);
             $table->string('description')->nullable();
             $table->foreignId('seller_id')->constrained('sellers')->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
