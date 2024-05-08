@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Cart\CartsResource;
 use App\Models\Cart;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,16 @@ class CartController extends Controller
         $buyer = Auth::user();
         if (!$buyer) {
             return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $existingCart = Cart::where('product_id', $request->product_id)
+            ->where('buyer_id', $buyer->id)
+            ->first();
+        if($existingCart) {
+            return response()->json(['message' => 'Product already exists in the cart'], 409);
+        }
+        $seller = Product::find(request('product_id'))->seller;
+        if($seller->buyer_id === $buyer->id) {
+            return response()->json(['message' => 'You are not authorized to add this product to the cart'], 403);
         }
         $request->validate([
             'product_id' => 'required|exists:products,id',

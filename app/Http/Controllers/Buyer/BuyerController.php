@@ -137,7 +137,7 @@ class BuyerController extends Controller
             return response()->json(['message' => 'Authentication required'], 401);
         }
         if ($notification->receiver !== $buyer->id){
-            return response()->json(['message' => "You can't delete this buyer"], 400);
+            return response()->json(['message' => "You can't delete this Notification"], 400);
         }
         $notification->delete();
         return response()->json(['message' => 'Notification deleted successfully'], 200);

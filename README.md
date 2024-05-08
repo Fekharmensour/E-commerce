@@ -142,12 +142,40 @@ these without authenticate
 
 ## Seller
 this without authenticate 
-# view seller
+# View seller
 - URL = "http://127.0.0.1:8000/seller/showSeller/{seller_id}"
 - data send = none
 - method = get
 - data response = { seller }
 - status success = 200
+
+# View Stocks
+- URL = "http://127.0.0.1:8000/seller/stock"
+- data send = none
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- method = get
+- data response = { stocks }
+- status success = 200
+
+# Show Stock
+- URL = "http://127.0.0.1:8000/seller/stock/{product_id}"
+- data send = none
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- method = get
+- data response = { stock }
+- status success = 200
+
+
+
+
 
 
 ## category
@@ -197,9 +225,10 @@ this without authenticate
 - data response = { product }
 - status success = 200
 
+# Manage your Product (for seller)
 # Store new Product: this with an authentication
 - URL = "http://127.0.0.1:8000/api/product/storeProduct"
-- data send = {name, price, description ,category_id ,photos(array of photos , min four photo)}
+- data send = {name, price, description , quantity ,category_id ,photos(array of photos , min 3 photo max 6 photos)}
 - method = post
 - config send = {
             headers: {
@@ -209,6 +238,42 @@ this without authenticate
 - data response = { message: 'Product created successfully', product }
 - status success = 201
 
+
+# update Product
+- URL = "http://127.0.0.1:8000/api/product/updateProduct/{product_id}"
+- data send = {name, price, description , quantity}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product details updated successfully', product }
+- status success = 200
+
+# update  Product Photos
+- URL = "http://127.0.0.1:8000/api/product/updatePhotos/{product_id}"
+- data send = { photos(array of photos , min 3 photo max 6 photos) }
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product photos updated successfully', product }
+- status success = 200
+
+# Delete Product
+- URL = "http://127.0.0.1:8000/api/product/deleteProduct/{product_id}"
+- data send = none
+- method = Delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message: 'Product deleted successfully' }
+- status success = 200
 
 ## Cart all of these you need to be authenticated
 # Add To Cart

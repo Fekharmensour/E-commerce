@@ -41,7 +41,8 @@ Route::middleware(['auth:sanctum'])->prefix('brand/')->group(function () {
 Route::get('/getSellers', [SellerController::class, 'index']);
 Route::get('seller/showSeller/{seller}', [SellerController::class, 'showSeller']);
 Route::middleware(['auth:sanctum'])->prefix('seller/')->group(function () {
-
+Route::get('stock', [SellerController::class, 'stock']);
+Route::get('stock/{product}', [SellerController::class, 'showStock']);
 });
 
 //////////////////////////// Product
@@ -49,7 +50,10 @@ Route::get('/product/{product}', [ProductController::class, 'showProduct']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/categories', [ProductController::class, 'indexCategory']);
 Route::middleware(['auth:sanctum'])->prefix('product/')->group(function () {
-    Route::post('/storeProduct', [ProductController::class, 'store']);
+    Route::post('storeProduct', [ProductController::class, 'store']);
+    Route::post('updateProduct/{product}', [ProductController::class, 'update']);
+    Route::post('updatePhotos/{product}', [ProductController::class, 'updatePhotos']);
+    Route::delete('deleteProduct/{product}', [ProductController::class, 'destroy']);
 });
 
 //////////////////////   Cart
