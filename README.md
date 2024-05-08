@@ -225,7 +225,7 @@ this without authenticate
 
 
 # update Cart (change quantity)
-- URL = "http://127.0.0.1:8000/api/cart/addToCart"
+- URL = "http://127.0.0.1:8000/api/cart/updateCart"
 - data send = {id(id_cart) , qte}
 - method = post
 - config send = {
