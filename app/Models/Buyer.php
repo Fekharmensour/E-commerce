@@ -52,4 +52,8 @@ class Buyer extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+    public function rewards():HasMany
+    {
+       return $this->hasMany(Reward::class);
+    }
 }

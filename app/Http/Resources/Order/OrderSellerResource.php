@@ -25,6 +25,9 @@ class OrderSellerResource extends JsonResource
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,
             'price' => $product ? $product->price : null,
+            'new_price'=> $cart->new_price ,
+            'discount' => $cart->discount_value ,
+            'total_price' => $cart->new_price? $cart->new_price * $cart->qte : $product->price * $cart->qte ,
             'buyer' => [
                 'id' => $buyer ? $buyer->id : null,
                 'username'=> $buyer ? $buyer->username : null,

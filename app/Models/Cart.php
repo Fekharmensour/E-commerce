@@ -15,7 +15,9 @@ class Cart extends Model
         'product_id',
         'buyer_id',
         'qte',
-        'is_ordered'
+        'is_ordered',
+        'new_price',
+        'discount_value'
     ];
 
     public function product():BelongsTo

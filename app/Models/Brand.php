@@ -19,4 +19,8 @@ class Brand extends Model
     {
         return $this->HasMany(Seller::class);
     }
+    public function coupons():HasMany
+    {
+        return $this->HasMany(Coupon::class);
+    }
 }

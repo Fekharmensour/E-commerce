@@ -9,6 +9,7 @@ use App\Http\Resources\Order\OrdersResource;
 use App\Models\Cart;
 use App\Models\Notification;
 use App\Models\Order;
+use App\Models\Reward;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,13 +84,26 @@ class OrderController extends Controller
         if($order->reject === 1 || $order->accepted ===1){
             return response()->json(['message' => 'This order is already rejected or accepted'], 401);
         }
-
         $order->accepted = true ;
         $order->save();
         $product = $order->cart->product;
+        $buyer = $order->cart->buyer_id;
+        $reward = Reward::where('seller_id' , $seller->id)->where('buyer_id' , $buyer)->first();
+        if ($reward){
+            $reward->point = $reward->point + 0.25 ;
+        }else{
+            $newReward = Reward::create([
+                'seller_id' => $seller->id,
+                'buyer_id' => $buyer,
+                'point' => 0.25
+            ]);
+            if (!$newReward){
+                return response()->json(['message' => 'Something went wrong'], 500);
+            }
+        }
         Notification::create([
             'sender' => $seller->buyer->id,
-            'receiver' => $order->cart->buyer_id,
+            'receiver' => $buyer,
             'title' => 'Order Accepted',
             'body' => 'Your order for ' . $product->name . ' has been accepted.',
             'type' => 'success',

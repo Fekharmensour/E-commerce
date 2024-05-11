@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Brand\BrandController;
 use App\Http\Controllers\Buyer\BuyerAuthController;
 use App\Http\Controllers\Buyer\BuyerController;
 use App\Http\Controllers\Buyer\CartController;
 use App\Http\Controllers\Buyer\OrderController;
+use App\Http\Controllers\Product\DiscountController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Seller\SellerController;
 use Illuminate\Support\Facades\Route;
@@ -66,16 +68,6 @@ Route::middleware(['auth:sanctum'])->prefix('cart/')->group(function () {
 });
 
 
-//////////////////// Admin
-Route::get('/users' , [BuyerController::class, 'index']);
-Route::post('/userUpdate' , [AdminController::class, 'updateUser']);
-Route::put('/admin/validSeller/{seller}' , [AdminController::class, 'validateSeller']);
-Route::get('/disabledSellers' , [AdminController::class, 'disabledSellers']);
-Route::delete('/admin/users/{buyer}' , [AdminController::class, 'deleteUser']);
-Route::put('/admin/rejectSeller/{seller}' , [AdminController::class, 'rejectSeller']);
-Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
-
-});
 
 
 ////////////////// Order
@@ -96,5 +88,34 @@ Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
     Route::get('sellerRejectedOrders', [OrderController::class, 'sellerRejectedOrders']);
     Route::get('waitingOrders', [OrderController::class, 'waitingOrders']);
 
+
+});
+
+Route::middleware(['auth:sanctum'])->prefix('discount/')->group(function () {
+    Route::get('{cart}' , [DiscountController::class, 'discounts']);
+    Route::post('store' , [DiscountController::class , 'store']);
+    Route::post('update/{discount}' , [DiscountController::class , 'update']);
+    Route::delete('delete/{discount}' , [DiscountController::class , 'delete']);
+    Route::post('activate/{discount}' , [DiscountController::class , 'active']);
+    Route::put('deactivate/{cart}'   , [DiscountController::class , 'deactivate']);
+    Route::post('searchCoupon' , [DiscountController::class , 'searchCoupon']);
+    Route::post('activateCoupon/{coupon}' , [DiscountController::class , 'activateCoupon']);
+});
+
+
+//////////////////// Admin
+Route::get('/users' , [BuyerController::class, 'index']);
+Route::post('/userUpdate' , [AdminController::class, 'updateUser']);
+Route::put('/admin/validSeller/{seller}' , [AdminController::class, 'validateSeller']);
+Route::get('/disabledSellers' , [AdminController::class, 'disabledSellers']);
+Route::delete('/admin/users/{buyer}' , [AdminController::class, 'deleteUser']);
+Route::put('/admin/rejectSeller/{seller}' , [AdminController::class, 'rejectSeller']);
+Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
+
+});
+Route::post('create' , [CouponController::class , 'create']);
+Route::post('update/{coupon}' , [CouponController::class , 'update']);
+Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
+Route::middleware(['auth:sanctum'])->prefix('admin/coupon')->group(function () {
 
 });

@@ -26,6 +26,9 @@ class CartsResource extends JsonResource
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,
             'price' => $product ? $product->price : null,
+            'new_price'=> $this->new_price  ,
+            'discount'=> $this->discount_value ,
+
         ];
     }
 }

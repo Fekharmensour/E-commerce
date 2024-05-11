@@ -338,6 +338,103 @@ this without authenticate
 - data response = { carts }
 - status success = 200
 
+# Discount 
+# Get All Discount vailable for this cart 
+- URL = "http://127.0.0.1:8000/api/discount/{cart_id}"
+- data send = none
+- method = get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { carts }
+- status success = 200
+
+# Store new Discount for seller 
+- URL = "http://127.0.0.1:8000/api/discount/store"
+- data send = {discount , max_discount , dateE }
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : Discount created successfully  , discount }
+- status success = 201
+
+# Update exist Discount for seller 
+- URL = "http://127.0.0.1:8000/api/discount/update/{discount_id}"
+- data send = {discount , max_discount , dateE }
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : Discount updated successfully  , discount }
+- status success = 200
+
+# Update exist Discount for seller 
+- URL = "http://127.0.0.1:8000/api/discount/delete/{discount_id}"
+- data send = none
+- method = delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : Discount deleted successfully  }
+- status success = 200
+
+# Activate Discount for cart 
+- URL = "http://127.0.0.1:8000/api/discount/activate/{discount_id}"
+- data send = {cart_id}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : discount activated successfully  , cart }
+- status success = 200
+
+# Deactivate All Discounts for cart 
+- URL = "http://127.0.0.1:8000/api/discount/deactivate/{cart_id}"
+- data send = none
+- method = put
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : discount deactivated successfully  , cart }
+- status success = 200
+
+# Search about Coupon  for this  cart 
+- URL = "http://127.0.0.1:8000/api/discount/searchCoupon"
+- data send = {cart_id , search}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { coupon }
+- status success = 200
+
+# Activate Coupon for cart 
+- URL = "http://127.0.0.1:8000/api/discount/activateCoupon/{coupon_id}"
+- data send = {cart_id}
+- method = post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { message : coupon activated successfully  , cart }
+- status success = 200
+
 ## Order must be authenticate
 # these for buyer
 # Set Order 

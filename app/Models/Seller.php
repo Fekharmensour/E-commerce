@@ -30,4 +30,12 @@ class Seller extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+    public function rewards(): HasMany
+    {
+        return $this->hasMany(Reward::class);
+    }
+    public function discounts(): HasMany
+    {
+        return $this->hasMany(Discount::class);
+    }
 }

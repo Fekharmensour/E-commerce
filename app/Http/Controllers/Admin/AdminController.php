@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Seller\SellersResource;
 use App\Mail\ValidateSeller;
 use App\Mail\WelcomeEmail;
+use App\Models\Brand;
 use App\Models\Buyer;
 use App\Models\Seller;
 use Illuminate\Http\Request;
@@ -34,6 +35,11 @@ class AdminController extends Controller
      }
      $seller->status = true ;
      $seller->save();
+     $brand = Brand::where('seller_id' , $seller->id)->first();
+     if($seller->is_owner === 1){
+         $brand->status = true ;
+         $brand->save();
+     }
      $buyer = $seller->buyer()->first();
      Mail::to($buyer->email)->send(new ValidateSeller($buyer));
      return response()->json(['message'=>'Seller validated'],200);
