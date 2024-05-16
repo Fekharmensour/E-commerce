@@ -6,19 +6,16 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Review extends Model
+class Complaint extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'content',
-        'rating',
         'buyer_id',
-        'product_id',
-    ];
-    public function product(): BelongsTo
-    {
-        return $this->belongsTo(Product::class);
-    }
+        'about_id',
+        'about',
+        'title',
+        'body'
+    ] ;
     public function buyer(): BelongsTo
     {
         return $this->belongsTo(Buyer::class);

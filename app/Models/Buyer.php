@@ -56,4 +56,13 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     {
        return $this->hasMany(Reward::class);
     }
+    public function reviews():HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    public function complaints():HasMany
+    {
+        return $this->hasMany(Complaint::class);
+    }
 }

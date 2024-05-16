@@ -35,7 +35,7 @@ class AdminController extends Controller
      }
      $seller->status = true ;
      $seller->save();
-     $brand = Brand::where('seller_id' , $seller->id)->first();
+     $brand = $seller->brand ;
      if($seller->is_owner === 1){
          $brand->status = true ;
          $brand->save();

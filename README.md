@@ -622,3 +622,120 @@ this without authenticate
         };
 - data response = {  'message' => 'Notification deleted successfully'  }
 - status success = 200
+
+
+# Review 
+# Test this Buyer Can Store Review 
+- URL = "http://127.0.0.1:8000/api/review/test/{product_id}"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = { True Or False }
+- status success = 200
+
+# Get All Review By Product 
+- URL = "http://127.0.0.1:8000/api/review/{product_id}"
+- data send = none
+- method = Get
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  reviews  }
+- status success = 200
+
+# Store Review By Product 
+- URL = "http://127.0.0.1:8000/api/review/{product_id}"
+- data send = {rating , content}
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : Review created successfully  , review   }
+- status success = 201
+
+# Ubdate Review  
+- URL = "http://127.0.0.1:8000/api/review/update/{review_id}"
+- data send = {rating , content}
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : Review Updated successfully  , review   }
+- status success = 200
+
+# Delete Review  
+- URL = "http://127.0.0.1:8000/api/review/delete/{review_id}"
+- data send = none
+- method = Delete
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : Review Deleted successfully  }
+- status success = 200
+
+# Complaints 
+# Store Complaint about review 
+## for this you must be a seller (Owner of Product)
+- URL = "http://127.0.0.1:8000/api/review/complaint/{review_id}"
+- data send = {title , body }
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : complaint Created successfully , complaint  }
+- status success = 201
+
+# Store Complaint about Product 
+## for this you must be a seller  (Owner of Product)
+- URL = "http://127.0.0.1:8000/api/product/complaint/{product_id}"
+- data send = {title , body }
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : complaint Created successfully , complaint  }
+- status success = 201
+
+# Store Complaint about buyer 
+## for this you must be a seller (this buyer ordered from you anything)
+- URL = "http://127.0.0.1:8000/api/order/complaint/{order_id}"
+- data send = {title , body }
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : complaint Created successfully , complaint  }
+- status success = 201
+
+# Store Complaint about seller 
+## for this you must be a buyer (you ordered from  this seller anything)
+- URL = "http://127.0.0.1:8000/api/order/complaint/seller/{order_id}"
+- data send = {title , body }
+- method = Post
+- config send = {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        };
+- data response = {  message : complaint Created successfully , complaint  }
+- status success = 201
+
+

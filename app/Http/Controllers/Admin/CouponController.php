@@ -35,4 +35,6 @@ class CouponController extends Controller
         $coupon->delete();
         return response()->json(['message'=>'Coupon deleted successfully' ] , 200);
     }
+
+
 }

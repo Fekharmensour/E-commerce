@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('buyer_id')->constrained('buyers')->cascadeOnDelete();
+            $table->integer('rating')->default(3);
+            $table->text('content')->nullable();
             $table->timestamps();
         });
     }
