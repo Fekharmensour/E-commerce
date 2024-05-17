@@ -144,27 +144,47 @@ class ComplaintController extends Controller
 
     public function buyerIndex()
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $complaints = Complaint::where('about' , 'buyer')->get();
         return BuyerResource::collection($complaints);
     }
     public function sellerIndex()
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $complaints = Complaint::where('about' , 'seller')->get();
         return SellerResource::collection($complaints);
     }
     public function reviewIndex()
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $complaints = Complaint::where('about' , 'review')->get();
         return ReviewResource::collection($complaints);
     }
     public function productIndex()
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $complaints = Complaint::where('about' , 'product')->get();
         return ProdResource::collection($complaints);
     }
 
     public function delete(Complaint $complaint)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         if (!$complaint){
             return response()->json(['message'=> 'Compliant Not Found']) ;
         }
@@ -174,6 +194,10 @@ class ComplaintController extends Controller
     }
     public function DeleteReview(Review $review , Complaint $complaint)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         if (!$review){
             return response()->json(['message' => 'Review Not Found'] , 401);
         }
@@ -186,6 +210,10 @@ class ComplaintController extends Controller
     }
     public function DeleteBuyer(Buyer $buyer , Complaint $complaint)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         if (!$buyer){
             return response()->json(['message' => 'Buyer Not Found'] , 401);
         }
@@ -198,6 +226,10 @@ class ComplaintController extends Controller
     }
     public function DeleteProduct(Product $product , Complaint $complaint)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         if (!$product){
             return response()->json(['message' => 'Product Not Found'] , 401);
         }
@@ -210,6 +242,10 @@ class ComplaintController extends Controller
     }
     public function DisableSeller(Seller $seller , Complaint $complaint)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         if (!$seller){
             return response()->json(['message' => 'Seller Not Found'] , 401);
         }

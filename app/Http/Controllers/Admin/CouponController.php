@@ -6,10 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CouponController extends Controller
 {
     public function create(Request $request){
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $validatedData = $request->validate([
             'brand_id' => 'required|exists:brands,id',
             'coupon' => 'required|string|unique:coupons,coupon|min:6|max:6',
@@ -22,6 +27,10 @@ class CouponController extends Controller
     }
     public function update(Request $request, Coupon $coupon)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $validatedData = $request->validate([
             'percentage' => 'required|numeric|min:0|max:100',
             'dateE' => 'nullable|date',
@@ -32,6 +41,10 @@ class CouponController extends Controller
 
     public function delete(Coupon $coupon)
     {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
         $coupon->delete();
         return response()->json(['message'=>'Coupon deleted successfully' ] , 200);
     }

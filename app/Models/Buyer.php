@@ -65,4 +65,9 @@ class Buyer extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Complaint::class);
     }
+
+    public function admin():HasOne
+    {
+        return $this->hasOne(Admin::class);
+    }
 }

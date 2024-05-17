@@ -120,32 +120,32 @@ Route::middleware(['auth:sanctum'])->prefix('discount/')->group(function () {
 
 
 //////////////////// Admin
+Route::post('/admin/login' , [AdminController::class , 'login']);
 Route::get('/users' , [BuyerController::class, 'index']);
-Route::post('/userUpdate' , [AdminController::class, 'updateUser']);
-Route::put('/admin/validSeller/{seller}' , [AdminController::class, 'validateSeller']);
 Route::get('/disabledSellers' , [AdminController::class, 'disabledSellers']);
-Route::delete('/admin/users/{buyer}' , [AdminController::class, 'deleteUser']);
-Route::put('/admin/rejectSeller/{seller}' , [AdminController::class, 'rejectSeller']);
 Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
-
+    Route::post('/userUpdate' , [AdminController::class, 'updateUser']);
+    Route::put('validSeller/{seller}' , [AdminController::class, 'validateSeller']);
+    Route::delete('users/{buyer}' , [AdminController::class, 'deleteUser']);
+    Route::put('rejectSeller/{seller}' , [AdminController::class, 'rejectSeller']);
 });
 
-Route::post('create' , [CouponController::class , 'create']);
-Route::post('update/{coupon}' , [CouponController::class , 'update']);
-Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
-Route::middleware(['auth:sanctum'])->prefix('admin/coupon')->group(function () {
 
+Route::middleware(['auth:sanctum'])->prefix('admin/coupon/')->group(function () {
+    Route::post('' , [CouponController::class , 'create']);
+    Route::post('update/{coupon}' , [CouponController::class , 'update']);
+    Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
 });
-Route::get('complaint/buyers' , [ComplaintController::class , 'buyerIndex']);
-Route::get('complaint/sellers' , [ComplaintController::class , 'sellerIndex']);
-Route::get('complaint/reviews', [ComplaintController::class , 'reviewIndex'] );
-Route::get('complaint/products' , [ComplaintController::class , 'productIndex']);
-Route::delete('complaint/{complaint}' , [ComplaintController::class , 'delete']);
-Route::delete('complaint/review/{review}/{complaint}' , [ComplaintController::class , 'DeleteReview']);
-Route::delete('complaint/product/{product}/{complaint}' , [ComplaintController::class , 'DeleteProduct']);
-Route::delete('complaint/buyer/{buyer}/{complaint}' , [ComplaintController::class , 'DeleteBuyer']);
-Route::delete('complaint/seller/{seller}/{complaint}' , [ComplaintController::class , 'DisableSeller']);
-Route::middleware(['auth:sanctum'])->prefix('admin/complaint')->group(function () {
 
+Route::middleware(['auth:sanctum'])->prefix('admin/complaint/')->group(function () {
+    Route::get('buyers' , [ComplaintController::class , 'buyerIndex']);
+    Route::get('sellers' , [ComplaintController::class , 'sellerIndex']);
+    Route::get('reviews', [ComplaintController::class , 'reviewIndex'] );
+    Route::get('products' , [ComplaintController::class , 'productIndex']);
+    Route::delete('{complaint}' , [ComplaintController::class , 'delete']);
+    Route::delete('review/{review}/{complaint}' , [ComplaintController::class , 'DeleteReview']);
+    Route::delete('product/{product}/{complaint}' , [ComplaintController::class , 'DeleteProduct']);
+    Route::delete('buyer/{buyer}/{complaint}' , [ComplaintController::class , 'DeleteBuyer']);
+    Route::delete('seller/{seller}/{complaint}' , [ComplaintController::class , 'DisableSeller']);
 });
 
