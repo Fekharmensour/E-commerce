@@ -34,6 +34,11 @@ class ReviewController extends Controller
         $validatedData['buyer_id'] = $buyer->id ;
         $validatedData['product_id'] = $product->id ;
         $review = Review::create($validatedData);
+        $product = $review->product ;
+        $countRevies = Product::All()->count();
+        $newRaiting = ( $countRevies * $product->rating_avg + $review->rating ) / ($countRevies + 1 );
+        $product->rating_avg = $newRaiting;
+        $product->save();
         if (!$review){
             return response()->json(["message" => "Failed to create review"] , 500);
         }
