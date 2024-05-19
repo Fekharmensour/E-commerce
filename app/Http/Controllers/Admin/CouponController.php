@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Cart\CouponResource;
 use App\Models\Brand;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
@@ -48,6 +49,17 @@ class CouponController extends Controller
         $coupon->delete();
         return response()->json(['message'=>'Coupon deleted successfully' ] , 200);
     }
+
+    public function indexAll()
+    {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $coupons = Coupon::all();
+        return response()->json(['coupons'=>CouponResource::collection($coupons)] , 200);
+    }
+
 
 
 }

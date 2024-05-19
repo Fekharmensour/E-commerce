@@ -21,6 +21,10 @@ class Coupon extends Model
     {
         return $this->belongsTo(Brand::class);
     }
+
+    protected $casts = [
+        'dateE' =>'date',
+    ];
     protected static function booted()
     {
         static::saving(function ($coupon) {

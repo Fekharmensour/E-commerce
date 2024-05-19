@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::post('/register', [BuyerAuthController::class, 'register']);
-Route::post('/login', [BuyerAuthController::class, 'login'])->name('login');
-
-
+Route::post('/login', [BuyerAuthController::class, 'login']);
 ////////////////////  Profile
 Route::middleware(['auth:sanctum'])->prefix('profile/')->group(function () {
     Route::get('', [BuyerAuthController::class, 'buyer']);
@@ -31,8 +29,6 @@ Route::middleware(['auth:sanctum'])->prefix('profile/')->group(function () {
     Route::delete('notification/{notification}', [BuyerController::class, 'DestroyNotification']);
 
 });
-
-
 ///////////////////////////// Brand
 Route::get('brand/getBrands', [BrandController::class, 'index']);
 Route::get('brand/showBrand/{brand}', [BrandController::class, 'showBrand']);
@@ -40,8 +36,6 @@ Route::middleware(['auth:sanctum'])->prefix('brand/')->group(function () {
     Route::post('store', [BrandController::class, 'store']);
     Route::get('disabledBrands' , [BrandController::class, 'disabledBrands']);
 });
-
-
 ///////////////////// Seller
 Route::get('/getSellers', [SellerController::class, 'index']);
 Route::get('seller/showSeller/{seller}', [SellerController::class, 'showSeller']);
@@ -50,7 +44,6 @@ Route::middleware(['auth:sanctum'])->prefix('seller/')->group(function () {
     Route::get('stock/{product}', [SellerController::class, 'showStock']);
 
 });
-
 //////////////////////////// Product
 Route::get('/product/{product}', [ProductController::class, 'showProduct']);
 Route::get('/products', [ProductController::class, 'index']);
@@ -62,7 +55,6 @@ Route::middleware(['auth:sanctum'])->prefix('product/')->group(function () {
     Route::delete('deleteProduct/{product}', [ProductController::class, 'destroy']);
     Route::post('complaint/{product}', [ComplaintController::class, 'ComplaintProd']);
 });
-
 ////////////// Review
 Route::get('review/{product}' , [ReviewController::class, 'index'] );
     Route::middleware(['auth:sanctum'])->prefix('review/')->group(function () {
@@ -72,8 +64,6 @@ Route::get('review/{product}' , [ReviewController::class, 'index'] );
     Route::get('test/{product}', [ReviewController::class, 'test'] );
     Route::post('complaint/{review}', [ComplaintController::class, 'ComplaintReview']);
 });
-
-
 //////////////////////   Cart
 Route::middleware(['auth:sanctum'])->prefix('cart/')->group(function () {
     Route::post('addToCart', [CartController::class, 'addToCart']);
@@ -108,7 +98,6 @@ Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
 });
 
 //////////////////discount
-
 Route::middleware(['auth:sanctum'])->prefix('discount/')->group(function () {
     Route::get('{cart}' , [DiscountController::class, 'discounts']);
     Route::post('store' , [DiscountController::class , 'store']);
@@ -134,6 +123,7 @@ Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
 
 
 Route::middleware(['auth:sanctum'])->prefix('admin/coupon/')->group(function () {
+    Route::get('', [CouponController::class , 'indexAll']);
     Route::post('' , [CouponController::class , 'create']);
     Route::post('update/{coupon}' , [CouponController::class , 'update']);
     Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
