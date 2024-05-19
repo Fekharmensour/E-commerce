@@ -17,7 +17,8 @@ class Cart extends Model
         'qte',
         'is_ordered',
         'new_price',
-        'discount_value'
+        'discount_value',
+        'is_validate'
     ];
 
     public function product():BelongsTo

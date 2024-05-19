@@ -20,7 +20,7 @@ class CartController extends Controller
         $existingCart = Cart::where('product_id', $request->product_id)
             ->where('buyer_id', $buyer->id)
             ->first();
-        if($existingCart) {
+        if($existingCart && $existingCart->is_validate == 0) {
             return response()->json(['message' => 'Product already exists in the cart'], 409);
         }
         $seller = Product::find(request('product_id'))->seller;

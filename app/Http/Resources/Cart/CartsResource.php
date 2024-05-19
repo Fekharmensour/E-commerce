@@ -22,6 +22,7 @@ class CartsResource extends JsonResource
             'id' => $this->id,
             'qte' => $this->qte,
             'is_ordered'=>$this->is_ordered,
+            'is_validate'=>$this->is_validate,
             'product_id' => $product? $product->id :null,
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,

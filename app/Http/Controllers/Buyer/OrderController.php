@@ -101,6 +101,9 @@ class OrderController extends Controller
                 return response()->json(['message' => 'Something went wrong'], 500);
             }
         }
+        $cart = $order->cart ;
+        $cart->is_validate = true ;
+        $cart->save();
         Notification::create([
             'sender' => $seller->buyer->id,
             'receiver' => $buyer,
@@ -124,6 +127,9 @@ class OrderController extends Controller
         $order->reject = true ;
         $order->save();
         $product = $order->cart->product;
+        $cart = $order->cart;
+        $cart->is_validate = true ;
+        $cart->save();
         Notification::create([
             'sender' => $seller->buyer->id,
             'receiver' => $order->cart->buyer_id,
