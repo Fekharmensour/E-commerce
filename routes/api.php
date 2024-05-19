@@ -136,6 +136,11 @@ Route::middleware(['auth:sanctum'])->prefix('admin/coupon/')->group(function () 
     Route::post('update/{coupon}' , [CouponController::class , 'update']);
     Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
 });
+Route::middleware(['auth:sanctum'])->prefix('admin/adds/')->group(function () {
+    Route::post('' , [AdminController::class , 'storeAdds']);
+    Route::post('update/{coupon}' , [CouponController::class , 'updateAdds']);
+    Route::delete('delete/{coupon}', [CouponController::class , 'deleteAdds']);
+});
 
 Route::middleware(['auth:sanctum'])->prefix('admin/complaint/')->group(function () {
     Route::get('buyers' , [ComplaintController::class , 'buyerIndex']);
