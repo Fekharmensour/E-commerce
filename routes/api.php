@@ -107,6 +107,8 @@ Route::middleware(['auth:sanctum'])->prefix('order/')->group(function () {
     Route::post('complaint/seller/{order}', [ComplaintController::class, 'ComplaintSeller']);
 });
 
+//////////////////discount
+
 Route::middleware(['auth:sanctum'])->prefix('discount/')->group(function () {
     Route::get('{cart}' , [DiscountController::class, 'discounts']);
     Route::post('store' , [DiscountController::class , 'store']);
@@ -136,10 +138,11 @@ Route::middleware(['auth:sanctum'])->prefix('admin/coupon/')->group(function () 
     Route::post('update/{coupon}' , [CouponController::class , 'update']);
     Route::delete('delete/{coupon}', [CouponController::class , 'delete']);
 });
-Route::middleware(['auth:sanctum'])->prefix('admin/adds/')->group(function () {
+Route::middleware(['auth:sanctum'])->prefix('admin/ads')->group(function () {
+    Route::get('' , [AdminController::class , 'indexAdds']);
     Route::post('' , [AdminController::class , 'storeAdds']);
-    Route::post('update/{coupon}' , [CouponController::class , 'updateAdds']);
-    Route::delete('delete/{coupon}', [CouponController::class , 'deleteAdds']);
+    Route::post('update/{ad}' , [AdminController::class , 'updateAdds']);
+    Route::delete('delete/{ad}', [AdminController::class , 'deleteAdds']);
 });
 
 Route::middleware(['auth:sanctum'])->prefix('admin/complaint/')->group(function () {

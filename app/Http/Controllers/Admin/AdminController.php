@@ -7,13 +7,16 @@ use App\Http\Resources\Buyer\AuthResource;
 use App\Http\Resources\Seller\SellersResource;
 use App\Mail\ValidateSeller;
 use App\Mail\WelcomeEmail;
+use App\Models\Adds;
 use App\Models\Admin;
+use App\Models\Ads;
 use App\Models\Brand;
 use App\Models\Buyer;
 use App\Models\Seller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -111,4 +114,79 @@ class AdminController extends Controller
         $buyer->save();
         return response()->json(['message'=>'Seller rejected successfully'],200);
     }
+
+    public function storeAdds(Request $request)
+    {
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $validatedData = $request->validate([
+            'text' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
+        ]);
+        if ($request->hasFile('image')) {
+            $logoPath = $request->file('image')->store('ads', 'public');
+            $validatedData['image'] = $logoPath;
+        }
+        $adds = Ads::create([
+            'text' => request('text'),
+            'image' => $validatedData['image'],
+        ]);
+        if (!$adds){
+            return response()->json(['message' => 'Ads not found'], 404);
+        }
+        return response()->json(['message'=>'Ads added successfully' , 'adds' => $adds],201);
+
+
+    }
+    public function updateAdds(Request $request, Ads $ad)
+    {
+        $admin = Auth::user()->admin;
+        if (!$admin) {
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+
+        $validatedData = $request->validate([
+            'text' => 'nullable|string',
+            'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif,svg|max:5120'
+        ]);
+
+        if ($request->hasFile('image')) {
+            if ($ad->image) {
+                Storage::disk('public')->delete($ad->image);
+            }
+            $logoPath = $request->file('image')->store('adds', 'public');
+            $validatedData['image'] = $logoPath;
+        }
+        $ad->update($validatedData);
+        return response()->json(['message' => 'Ad updated successfully', 'ad' => $ad], 200);
+    }
+    public function deleteAdds($ad)
+    {
+        $admin = Auth::user()->admin;
+        if (!$admin) {
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+
+        $ads = Ads::find($ad);
+        if (!$ads) {
+            return response()->json(['message' => 'Ad not found'], 404);
+        }
+
+        if ($ads->image) {
+            Storage::disk('public')->delete($ads->image);
+        }
+
+        $ads->delete();
+
+        return response()->json(['message' => 'Ad deleted successfully'], 200);
+    }
+
+    public function indexAdds()
+    {
+        $ads = Ads::all();
+        return response()->json(['ads' => $ads], 200);
+    }
+
 }
