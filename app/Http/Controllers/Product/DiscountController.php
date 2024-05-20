@@ -70,7 +70,7 @@ class DiscountController extends Controller
         }
         $reward = Reward::where('seller_id' , $seller->id)->where('buyer_id' , $buyer->id)->first();
         if(!$reward){
-            return response()->json(["message" => "you can't use this discount"] , 401);
+            return response()->json(["message" => "you can't use this discount"] , 400);
         }
         $calcDiscount = $reward->point * $discount->discount;
         if( $calcDiscount > $discount->max_discount ){
@@ -81,9 +81,9 @@ class DiscountController extends Controller
         $cart->new_price = $new_Price ;
         $cart->discount_value = $discount->discount ;
         $cart->save();
-        return response()->json(['message' => 'discount activated successfully' , 'cart' => new CartsResource($cart)] );
+        return response()->json(['message' => 'discount activated successfully' , 'cart' => new CartsResource($cart)] ,200 );
     }
-    public function deactivate(Request $request , Cart $cart){
+    public function deactivate(Cart $cart){
         $buyer = Auth::user();
         if (!$buyer){
             return response()->json(["message" => "Authorization failed"] , 401);
@@ -94,7 +94,7 @@ class DiscountController extends Controller
         $cart->new_price = null ;
         $cart->discount_value = null ;
         $cart->save();
-        return response()->json(['message' => 'discount deactivated successfully' , 'cart' => new CartsResource($cart)] );
+        return response()->json(['message' => 'discount deactivated successfully' , 'cart' => new CartsResource($cart)] ,200 );
     }
 
     public function update(Request $request , Discount  $discount)
@@ -148,9 +148,9 @@ class DiscountController extends Controller
         $brand = $cart->product->seller->brand;
         $coupon = Coupon::where('coupon' , $request->get('search'))->first();
         if (!$coupon || $coupon->brand_id != $brand->id){
-            return response()->json(["message" => "coupon code not found"] , 401);
+            return response()->json(["message" => "coupon code not found"] , 400);
         }
-        return response()->json(['coupon' , $coupon] , 200) ;
+        return response()->json(['message'=>'Coupon was Found', 'coupon' , $coupon] , 200) ;
 
     }
 

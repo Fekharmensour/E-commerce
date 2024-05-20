@@ -24,6 +24,13 @@ class SellerController extends Controller
       }
       return response()->json([ 'seller' => new SellersResource($seller)], 200);
   }
+    public function getSeller(Seller $seller)
+    {
+        if(!$seller){
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        return response()->json([ 'seller' => new SellersResource($seller)], 200);
+    }
   public function stock()
   {
       $seller = Auth::user()->seller;
