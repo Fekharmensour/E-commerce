@@ -38,9 +38,16 @@ class AdminController extends Controller
             return response()->json(['message' => 'You are not authorized to access the admin panel'], 401);
         }
         $token = $buyer->createToken('buyer_token')->plainTextToken;
-        return response()->json(['token' => $token, 'buyer' => new AuthResource($buyer)], 200);
+        return response()->json(['token' => $token, 'user' => new AuthResource($buyer)], 200);
     }
 
+    public function test(){
+        $admin = Auth::user()->admin ;
+        if (!$admin){
+            return response()->json(false);
+        }
+        return response()->json(true);
+    }
     public function updateUser(Request $request){
         $admin = Auth::user()->admin ;
         if (!$admin){

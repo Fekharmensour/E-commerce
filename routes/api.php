@@ -115,6 +115,7 @@ Route::post('/admin/login' , [AdminController::class , 'login']);
 Route::get('/users' , [BuyerController::class, 'index']);
 Route::get('/disabledSellers' , [AdminController::class, 'disabledSellers']);
 Route::middleware(['auth:sanctum'])->prefix('admin/')->group(function () {
+    Route::get('test', [AdminController::class , 'test']);
     Route::post('/userUpdate' , [AdminController::class, 'updateUser']);
     Route::put('validSeller/{seller}' , [AdminController::class, 'validateSeller']);
     Route::delete('users/{buyer}' , [AdminController::class, 'deleteUser']);
