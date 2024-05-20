@@ -16,9 +16,13 @@ class SellerController extends Controller
       $sellers = Seller::with(['brand', 'buyer'])->get();
       return response()->json([ 'sellers' => SellersResource::collection($sellers)], 200);
   }
-  public function showSeller(Seller $seller)
+  public function showSeller()
   {
-    return response()->json([ 'seller' => new SellersResource($seller)], 200);
+      $seller = Auth::user()->seller;
+      if(!$seller){
+          return response()->json(['message' => 'Authentication required'], 401);
+      }
+      return response()->json([ 'seller' => new SellersResource($seller)], 200);
   }
   public function stock()
   {

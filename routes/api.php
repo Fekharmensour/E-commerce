@@ -38,8 +38,9 @@ Route::middleware(['auth:sanctum'])->prefix('brand/')->group(function () {
 });
 ///////////////////// Seller
 Route::get('/getSellers', [SellerController::class, 'index']);
-Route::get('seller/showSeller/{seller}', [SellerController::class, 'showSeller']);
+//Route::get('seller/showSeller/{seller}', [SellerController::class, 'showSeller']);
 Route::middleware(['auth:sanctum'])->prefix('seller/')->group(function () {
+    Route::get('showSeller', [SellerController::class, 'showSeller']);
     Route::get('stock', [SellerController::class, 'stock']);
     Route::get('stock/{product}', [SellerController::class, 'showStock']);
 
