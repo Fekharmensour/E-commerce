@@ -22,6 +22,7 @@ class OrderSellerResource extends JsonResource
             'id' => $this->id,
             'qte' => $cart->qte,
             'accepted' => $this->accepted ,
+            'rejected'=>$this->reject,
             'image' => $image ? $image->photo : null,
             'name' => $product ? $product->name : null,
             'price' => $product ? $product->price : null,
