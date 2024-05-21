@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Buyer;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Profile\UpdateRequest;
 use App\Http\Resources\Buyer\BuyerResource;
-use App\Http\Resources\NoitficationResource;
 use App\Http\Resources\Cart\CartsResource;
 use App\Models\Buyer;
 use App\Models\Cart;
@@ -153,8 +152,7 @@ class BuyerController extends Controller
             return response()->json(['message' => 'Authentication required'], 401);
         }
         $Notification = Notification::where('receiver' , $buyer->id)->get();
-        $sender = Buyer::find($Notification->sender);
-        return response()->json(['Notification' => NoitficationResource::collection($Notification)], 200);
+        return response()->json(['Notification' => $Notification], 200);
     }
 
     public function DestroyNotification(Notification $notification){
