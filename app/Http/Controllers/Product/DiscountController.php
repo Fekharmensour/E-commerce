@@ -150,7 +150,7 @@ class DiscountController extends Controller
         if (!$coupon || $coupon->brand_id != $brand->id){
             return response()->json(["message" => "coupon code not found"] , 400);
         }
-        return response()->json(['message'=>'Coupon was Found', 'coupon' , $coupon] , 200) ;
+        return response()->json(['message'=>'Coupon was Found', 'coupon' => $coupon] , 200) ;
 
     }
 
@@ -172,7 +172,7 @@ class DiscountController extends Controller
         $cart->new_price = $new_price ;
         $cart->discount_value = $coupon->percentage ;
         $cart->save();
-        return response()->json(['message' => 'Coupon activated successfully' , 'cart' => new CartsResource($cart)] );
+        return response()->json(['message' => 'Coupon activated successfully' , 'cart' => new CartsResource($cart)] ,200);
     }
 
 

@@ -76,20 +76,24 @@ class ReviewController extends Controller
     public function test(Product $product)
     {
         $buyer = Auth::user();
-        if (!$buyer){
-            return response()->json(["message" => "Authorization failed"] , 401);
+        if (!$buyer) {
+            return response()->json(["message" => "Authorization failed"], 401);
         }
-        $cart = Cart::where('product_id' , $product->id)->where('buyer_id' , $buyer->id);
-        if (!$cart){
+        $cart = Cart::where('product_id', $product->id)->where('buyer_id', $buyer->id)->get();
+        if ($cart->isEmpty()) {
             return response()->json(false);
         }
-        foreach ($cart->get() as $cartItem){
-            $order = Order::where('cart_id' , $cartItem->id)->where('accepted' , '=' ,1)->first();
+        $orderFound = false;
+        foreach ($cart as $cartItem) {
+            $order = Order::where('cart_id', $cartItem->id)->where('accepted', '=', 1)->first();
+            if ($order) {
+                $orderFound = true;
+                break;
+            }
         }
-        if (!$order){
+        if (!$orderFound) {
             return response()->json(false);
         }
         return response()->json(true);
-
     }
 }

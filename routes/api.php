@@ -27,7 +27,8 @@ Route::middleware(['auth:sanctum'])->prefix('profile/')->group(function () {
     Route::post('resetPassword', [BuyerAuthController::class, 'update_Password']);
     Route::get('notification', [BuyerController::class, 'Notification']);
     Route::delete('notification/{notification}', [BuyerController::class, 'DestroyNotification']);
-
+    Route::post('address' , [BuyerController::class, 'Address']);
+    Route::post('phone' , [BuyerController::class, 'Phone']);
 });
 ///////////////////////////// Brand
 Route::get('brand/getBrands', [BrandController::class, 'index']);

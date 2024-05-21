@@ -74,6 +74,30 @@ class BuyerController extends Controller
         $buyer->update($validation);
         return response()->json(['message' => 'Profile updated successfully', 'buyer' => $buyer], 200);
     }
+    public function Address(Request $request)
+    {
+        $buyer = Auth::user();
+        if (!$buyer) {
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $validation = $request->validate([
+            'address' => 'required',
+        ]);
+        $buyer->update($validation);
+        return response()->json(['message' => 'Address updated successfully', 'buyer' => $buyer], 200);
+    }
+    public function Phone(Request $request)
+    {
+        $buyer = Auth::user();
+        if (!$buyer) {
+            return response()->json(['message' => 'Authentication required'], 401);
+        }
+        $validation = $request->validate([
+            'phone' => 'required',
+        ]);
+        $buyer->update($validation);
+        return response()->json(['message' => 'Phone updated successfully', 'buyer' => $buyer], 200);
+    }
     public function updateImage(Request $request )
     {
         $request->validate([

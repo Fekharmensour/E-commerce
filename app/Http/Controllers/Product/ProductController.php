@@ -142,7 +142,7 @@ class ProductController extends Controller
             $products = $products->where('price', '<=', $request->get('max_price'));
         }
 
-        $products = $products->paginate(8);
+        $products = $products->paginate(12);
         $formattedProducts = $products->map(function ($product) {
             return  new ProductsResource($product);
         });

@@ -22,6 +22,12 @@ class OrderController extends Controller
         if (!$buyer) {
             return response()->json(['message' => 'Authentication required'], 401);
         }
+        if(!$buyer->address ){
+            return response()->json(['message' => 'please fill your address'], 400);
+        }
+        if(!$buyer->phone ){
+            return response()->json(['message' => 'please fill your phone'], 400);
+        }
         $validated = $request->validate([
             'cart_id' => 'required|exists:carts,id',
         ]);
