@@ -19,7 +19,9 @@ class Discount extends Model
     protected static function booted()
     {
         static::saving(function ($discount) {
-            if ($discount->dateE && $discount->dateE->lte(Carbon::today())) {
+            // Convert dateE to a Carbon instance before using lte()
+            $discountDateE = Carbon::parse($discount->dateE);
+            if ($discount->dateE && $discountDateE->lte(Carbon::today())) {
                 $discount->delete();
             }
         });
